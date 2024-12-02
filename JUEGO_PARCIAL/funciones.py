@@ -6,7 +6,7 @@ def cargar_puntajes():
             contenido = archivo.read()
             if contenido:  # Verifica si el contenido no está vacío
                 return json.loads(contenido)  # Carga los puntajes
-    return []# Si el archivo no existe o está vacío, devolver una lista vacía
+    return []# Si el archivo no existe o está vacio, devolver una lista vacia
 
 # Función para guardar un puntaje en el archivo JSON
 def guardar_puntaje(nombre, puntos):
@@ -29,7 +29,6 @@ def guardar_puntaje(nombre, puntos):
     
     with open(ARCHIVO_PUNTAJES, "w") as archivo:
         json.dump(puntajes, archivo, indent=4)
-
 
 def mostrar_puntajes():
     puntajes = cargar_puntajes()
@@ -110,7 +109,6 @@ def pedir_nombre():
 
         pygame.display.flip()
 
-
 def pausa():
     pausado = True
 
@@ -179,7 +177,7 @@ def menu_inicio():
     rect_salir = texto_salir.get_rect(center=(ANCHO//2, 500))
 
     # Dibujar recuadros alrededor del texto
-    pygame.draw.rect(pantalla, BLANCO, rect_jugar.inflate(20, 20), 2)  # Inflate (20, 20) aumenta el tamaño del recuadro
+    pygame.draw.rect(pantalla, BLANCO, rect_jugar.inflate(20, 20), 2)  # Inflate (20, 20) aumenta el tamaño del recuadro (en este caso 20 pixeles de cada lado)
     pygame.draw.rect(pantalla, BLANCO, rect_tabla.inflate(20, 20), 2)
     pygame.draw.rect(pantalla, BLANCO, rect_salir.inflate(20, 20), 2)
 
@@ -205,7 +203,7 @@ def menu_inicio():
                 if event.key == pygame.K_ESCAPE:  # Presiona Escape para salir
                     pygame.quit()
                     exit()
-                if event.key == pygame.K_DOWN:  # Presiona Abajo para ver la tabla de puntajes
+                if event.key == pygame.K_DOWN:  # Presiona abajo para ver la tabla de puntajes
                     mostrar_puntajes()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
@@ -227,9 +225,9 @@ def iniciar_juego():
     # Crear el objeto del jugador
     jugador = Auto(363, 670)
     obstaculos = []
-    distancia_minima = 40  # Distancia mínima vertical entre obstáculos
+    distancia_minima = 40  # Distancia minima vertical entre obstaculos
 
-    # Generar obstáculos iniciales
+    # Generar obstaculos iniciales
     for _ in range(9):
         intentos = 0  # Contador de intentos
         while intentos < 100:  # Límite de intentos
@@ -246,12 +244,9 @@ def iniciar_juego():
 
             if not superpone:
                 obstaculos.append(nuevo_obstaculo)
-                break  # Salir del bucle si se encontró una posición válida
+                break  # Salir del bucle si se encontro una posicion valida
 
             intentos += 1  # Incrementar el contador de intentos
-
-        if intentos == 100:
-            print("No se pudo posicionar un obstaculo después de 100 intentos.")
 
     fondo_y = 0
     puntos = 0
@@ -262,7 +257,7 @@ def iniciar_juego():
     reloj = pygame.time.Clock()
     while flag_prendido:
         reloj.tick(FPS)
-        puntos += 1  # Incrementar puntos en cada iteración del bucle principal
+        puntos += 1  # Incrementar puntos en cada iteracion del bucle principal
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -271,7 +266,7 @@ def iniciar_juego():
                 if event.key == pygame.K_ESCAPE:  # Presiona 'P' para pausar el juego
                     pausa()
 
-        # Actualizar posición del fondo
+        # Actualizar posicion del fondo
         fondo_y += 2
         if fondo_y >= ALTO:
             fondo_y = 0
@@ -290,7 +285,7 @@ def iniciar_juego():
         jugador_rect = jugador.obtener_rect()
         for obstaculo in obstaculos:
             if jugador_rect.colliderect(obstaculo.obtener_rect()):
-                print("Colisión detectada! Fin del juego.")
+                print("Colision detectada! Fin del juego.")
                 sonido_colision.play()
                 sonido_fondo.stop()  # Detener el sonido de fondo
                 pantalla_game_over()

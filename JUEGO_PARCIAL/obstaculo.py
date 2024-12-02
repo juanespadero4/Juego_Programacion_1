@@ -41,13 +41,13 @@ class Obstaculo:
                         nueva_x = random.choice([280, 356, 435, 500, 205])
                         break
             self.x = nueva_x
-            print(f"Obstáculo reaparece en x: {self.x}, y: {self.y}")
+            print(f"Obstaculo reaparece en x: {self.x}, y: {self.y}")
             self.imagen_enemigo = self.obtener_imagen_obstaculo()
             self.escalar_imagen()  # Escalar la nueva imagen
 
     
     def obtener_imagen_obstaculo(self):
-        "Devuelve una imagen aleatoria de obstáculo"
+        "Devuelve una imagen aleatoria de obstaculo"
         enemigos_imagenes = [
             pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/auto_esquiva.png"),
             pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/barrera.png"),
@@ -58,13 +58,13 @@ class Obstaculo:
 
     
     def escalar_imagen(self):
-        "Escala la imagen del obstáculo a su doble tamaño"
+        "Escala la imagen del obstaculo a su doble tamaño"
         self.ancho = self.imagen_enemigo.get_width() * 2
         self.alto = self.imagen_enemigo.get_height() * 2
         self.imagen_enemigo = pygame.transform.scale(self.imagen_enemigo, (self.ancho, self.alto))
 
     def obtener_rect(self, x=None):
-        "Devuelve el rectángulo de colisión del obstáculo"
+        "Devuelve el rectangulo de colision del obstaculo"
         if x is None:
             x = self.x
         return pygame.Rect(x, self.y, self.ancho, self.alto)

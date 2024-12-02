@@ -23,7 +23,7 @@ class Auto:
         pantalla.blit(self.imagen, (self.x, self.y))
 
     def obtener_rect(self):
-        "Devuelve el rectángulo de colisión del auto"
+        "Devuelve el rectangulo de colision del auto"
         return pygame.Rect(self.x, self.y, self.ancho, self.alto)
 
 
