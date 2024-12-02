@@ -1,37 +1,4 @@
-import pygame
-import os
-import json
-from jugador import *
-from obstaculo import *
-
-pygame.init()
-pygame.mixer.init()
-
-ANCHO = 758
-ALTO = 757
-FPS = 60
-
-carriles_x = [280, 356, 435, 500, 205]
-pygame.display.set_caption("SPEEDCAR")
-icono = pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/auto_icono2.png")
-pygame.display.set_icon(icono)
-pantalla = pygame.display.set_mode((ANCHO, ALTO))
-fondo_juego = pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/fondo_juego.png")
-fondo_juego_rect = fondo_juego.get_rect()
-fuente = pygame.font.Font("Juego_Programacion_1/JUEGO_PARCIAL/FUENTE/game_over.ttf", 60)  # Fuente para mostrar los puntos
-fuente_titulo = pygame.font.Font("Juego_Programacion_1/JUEGO_PARCIAL/FUENTE/game_over.ttf", 100)
-BLANCO = (255, 255, 255)
-NEGRO = (0, 0, 0)
-
-# Cargar archivos de sonidos
-sonido_fondo = pygame.mixer.Sound("Juego_Programacion_1/JUEGO_PARCIAL/SONIDOS/sonido_fondo.mp3")
-sonido_colision = pygame.mixer.Sound("Juego_Programacion_1/JUEGO_PARCIAL/SONIDOS/game_over.mp3")
-
-nombre_usuario = ""  # Variable para almacenar el nombre del usuario
-
-######################################################################
-ARCHIVO_PUNTAJES = "Juego_Programacion_1/JUEGO_PARCIAL/puntaje_jugadores.json"
-
+from configuracion import *
 # Función para cargar puntajes desde el archivo JSON
 def cargar_puntajes():
     if os.path.exists(ARCHIVO_PUNTAJES):  # Verifica si el archivo existe
@@ -97,12 +64,17 @@ def pedir_nombre():
     global nombre_usuario
     pantalla.fill(NEGRO)
 
-    texto_instruccion = fuente.render("Introduce tu nombre:", True, BLANCO)
+    texto_instruccion = fuente_titulo.render("Introduce tu nombre:", True, BLANCO)
     nombre_rect = pygame.Rect(ANCHO // 2 - 150, 400, 300, 50)
-
+    
+    # Mensaje de advertencia
+    texto_advertencia = fuente.render("Por favor, ingresa un nombre valido", True, ROJO)
+    
     pygame.display.flip()
     nombre = ""
     ingresando_nombre = True
+    mostrar_advertencia = False
+    tiempo_advertencia = 0  # Para controlar el tiempo de la advertencia
 
     while ingresando_nombre:
         for event in pygame.event.get():
@@ -110,9 +82,13 @@ def pedir_nombre():
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN and nombre:  # Presionar Enter para confirmar
-                    ingresando_nombre = False
-                    nombre_usuario = nombre.upper()  # Convertir el nombre a mayúsculas
+                if event.key == pygame.K_RETURN:  # Presionar Enter para confirmar
+                    if nombre:  # Verifica si hay texto ingresado
+                        ingresando_nombre = False
+                        nombre_usuario = nombre.upper()  # Convertir el nombre a mayusculas
+                    else:
+                        mostrar_advertencia = True
+                        tiempo_advertencia = pygame.time.get_ticks()  # Captura el tiempo actual
                 elif event.key == pygame.K_BACKSPACE:  # Borrar con Backspace
                     nombre = nombre[:-1]
                 else:  # Agregar caracteres al nombre
@@ -124,6 +100,14 @@ def pedir_nombre():
         pygame.draw.rect(pantalla, BLANCO, nombre_rect, 2)
         texto_nombre = fuente.render(nombre, True, BLANCO)
         pantalla.blit(texto_nombre, (nombre_rect.x + 10, nombre_rect.y + 5))
+        
+        # Mostrar advertencia si no hay nombre
+        if mostrar_advertencia:
+            pantalla.blit(texto_advertencia, (ANCHO // 2 - texto_advertencia.get_width() // 2, 460))
+            # Verificar si han pasado 2 segundos
+            if pygame.time.get_ticks() - tiempo_advertencia > 2000:  # 2 segundos
+                mostrar_advertencia = False  # Ocultar advertencia después de 2 segundos
+
         pygame.display.flip()
 
 
@@ -339,3 +323,8 @@ def iniciar_juego():
         pantalla.blit(texto_puntos, (10, 10))
 
         pygame.display.flip()
+
+def play_speedcar():
+    menu_inicio()
+    iniciar_juego()
+    pygame.quit()
