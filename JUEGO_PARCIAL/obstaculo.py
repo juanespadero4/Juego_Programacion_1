@@ -7,7 +7,7 @@ FPS = 60
 
 pygame.display.set_caption("SPEEDCAR")
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
-fondo_juego = pygame.image.load("JUEGO_PARCIAL/fondo_juego.png")
+fondo_juego = pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/fondo_juego.png")
 fondo_juego_rect = fondo_juego.get_rect()
 
 class Obstaculo:
@@ -49,9 +49,9 @@ class Obstaculo:
     def obtener_imagen_obstaculo(self):
         "Devuelve una imagen aleatoria de obstáculo"
         enemigos_imagenes = [
-            pygame.image.load("JUEGO_PARCIAL/PERSONAJE/auto_esquiva.png"),
-            pygame.image.load("JUEGO_PARCIAL/PERSONAJE/barrera.png"),
-            pygame.image.load("JUEGO_PARCIAL/PERSONAJE/barril.png")
+            pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/auto_esquiva.png"),
+            pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/barrera.png"),
+            pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/barril.png")
         ]
         imagen = random.choice(enemigos_imagenes)
         return imagen

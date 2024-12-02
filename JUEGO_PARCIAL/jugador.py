@@ -7,7 +7,7 @@ FPS = 60
 
 pygame.display.set_caption("SPEEDCAR")
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
-fondo_juego = pygame.image.load("JUEGO_PARCIAL/fondo_juego.png")
+fondo_juego = pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/fondo_juego.png")
 fondo_juego_rect = fondo_juego.get_rect()
 
 class Auto:
@@ -15,7 +15,7 @@ class Auto:
         self.x = x
         self.y = y
         self.velocidad = 5
-        self.imagen = pygame.image.load("JUEGO_PARCIAL/PERSONAJE/auto.png")
+        self.imagen = pygame.image.load("Juego_Programacion_1/JUEGO_PARCIAL/PERSONAJE/auto.png")
         self.ancho, self.alto = self.imagen.get_size()  # Ajustar a las dimensiones reales de la imagen
 
     def dibujar(self):
